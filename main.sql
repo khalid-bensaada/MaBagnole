@@ -56,3 +56,9 @@ CREATE TABLE avis (
     FOREIGN KEY (client_id) REFERENCES utilisateurs(id),
     FOREIGN KEY (vehicule_id) REFERENCES vehicules(id)
 );
+
+
+INSERT INTO categories (nom ,description)
+VALUES("SL","Voiture de sport compacte (roadster) à deux places")
+
+SELECT * FROM categories WHERE nom = "SL";

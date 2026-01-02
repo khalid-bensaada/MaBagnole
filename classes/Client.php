@@ -1,9 +1,8 @@
 <?php
 require_once 'Database.php';
-
 class Client extends Database
 {
-
+    public $client ;
     private $id;
     private $name;
     private $email;
@@ -11,7 +10,7 @@ class Client extends Database
     private $role;
     private $timeC;
 
-    public function __construct(int $id, string $name = "", string $email = "", string $password = "", string $role = "", float $timeC)
+    public function __construct($client,int $id, string $name = "", string $email = "", string $password = "", string $role = "", float $timeC)
     {
         $this->id = $id;
         $this->name = $name;
@@ -19,6 +18,7 @@ class Client extends Database
         $this->password = $password;
         $this->role = $role;
         $this->timeC = $timeC;
+        $this -> client = $client ;
 
     }
     public function getId(): int
@@ -92,7 +92,7 @@ class Client extends Database
     }
 
     // SELECT CLIENT FROM HIS EMAIL
-    public function foundEmail($email)
+    public  function foundEmail($email)
     {
         $sql = "SELECT * FROM utilisateurs WHERE email = ? ";
 

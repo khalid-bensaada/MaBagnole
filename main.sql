@@ -62,3 +62,7 @@ INSERT INTO categories (nom ,description)
 VALUES("SL","Voiture de sport compacte (roadster) à deux places")
 
 SELECT * FROM categories WHERE nom = "SL";
+
+USE mabagnole ;
+ALTER TABLE vehicules
+ADD COLUMN caracteristiques VARCHAR(255) AFTER disponibilite;

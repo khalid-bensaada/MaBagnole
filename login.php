@@ -1,3 +1,42 @@
+<?php
+session_start();
+require_once 'classes/Database.php';
+require_once 'classes/Client.php';
+
+$db = new Database();
+$pdo = $db->getPdo();
+
+if (isset($_POST['login'])) {
+
+    $errors = [];
+    $password = $_POST['password'];
+    $email = $_POST['email'];
+
+    $found = $client->foundEmail($email);
+    if (!$found) {
+        $errors['email_error'] = "sorry email you entered is not valid try again";
+    }
+
+    $verify = $client->verifyP($password);
+    if (!$verify) {
+        $errors['password_error'] = "sorry the password invalid";
+    }
+
+    $_SESSION['name'] = $client->getName();
+    $_SESSION['role'] = $client->getRole();
+
+    switch($client->getRole()){
+        case 'admin':
+            header("Location: admin.php");
+            
+        case 'client':
+            header("Location: clientH.php");
+            
+    }
+
+}
+
+?>
 <!DOCTYPE html>
 
 <html class="light" lang="fr">
@@ -128,7 +167,8 @@
                         <div class="relative">
                             <input
                                 class="form-input flex w-full resize-none rounded-lg border border-[#dbe0e6] dark:border-gray-600 bg-white dark:bg-gray-800 text-[#111418] dark:text-white focus:border-primary focus:ring-1 focus:ring-primary h-12 pl-11 pr-4 text-base placeholder:text-[#617589] dark:placeholder:text-gray-500 transition-colors"
-                                id="email" placeholder="votre@email.com" required="" type="email" value="" name = "email"/>
+                                id="email" placeholder="votre@email.com" required="" type="email" value=""
+                                name="email" />
                             <div
                                 class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-[#617589] dark:text-gray-500">
                                 <span class="material-symbols-outlined text-[20px]">mail</span>
@@ -146,7 +186,8 @@
                         <div class="relative flex w-full items-stretch">
                             <input
                                 class="form-input flex w-full min-w-0 resize-none rounded-lg border border-[#dbe0e6] dark:border-gray-600 border-r-0 rounded-r-none bg-white dark:bg-gray-800 text-[#111418] dark:text-white focus:border-primary focus:ring-1 focus:ring-primary h-12 pl-11 text-base placeholder:text-[#617589] dark:placeholder:text-gray-500 transition-colors z-10"
-                                id="password" placeholder="********" required="" type="password" value="" name="password"/>
+                                id="password" placeholder="********" required="" type="password" value=""
+                                name="password" />
                             <div
                                 class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-[#617589] dark:text-gray-500 z-20">
                                 <span class="material-symbols-outlined text-[20px]">lock</span>

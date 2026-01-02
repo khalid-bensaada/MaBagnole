@@ -103,5 +103,10 @@ class Client extends Database
         return $stmt->fetch(PDO::FETCH_ASSOC);
 
     }
+
+    public function verifyP($password)
+    {
+        return password_verify($password, $this->password);
+    }
 }
 ?>

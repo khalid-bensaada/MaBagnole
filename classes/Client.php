@@ -49,29 +49,30 @@ class Client extends Database
 
     public function setName(string $name)
     {
-        $this->name = $name ;
+        $this->name = $name;
     }
     public function setEmail(string $email)
     {
-        $this->email = $email ;
+        $this->email = $email;
     }
     public function setPassword(string $password)
     {
-        $this->password = $password ;
+        $this->password = $password;
     }
     public function setRole(string $role)
     {
-        $this->role = $role ;
+        $this->role = $role;
     }
-    public function setTime(float $timeC){
+    public function setTime(float $timeC)
+    {
         $this->timeC = $timeC;
     }
-    
+
     // PASSWORD HASHING
     public function hash()
     {
-        $password_hash = password_hash($this->password );
-        $this->password = $password_hash ;
+        $password_hash = password_hash($this->password);
+        $this->password = $password_hash;
     }
     // CREATION A CLIENT
     public function create()
@@ -80,13 +81,27 @@ class Client extends Database
         VALUES (:name , :email, :password ,:role)";
 
         $stmt = $this->pdo->prepare($sql);
-        
+
         return $stmt->execute([
             ':name' => $this->name,
             ':email' => $this->email,
             ':password' => $this->password,
             ':role' => $this->role
         ]);
+
+    }
+
+    // SELECT CLIENT FROM HIS EMAIL
+    public function foundEmail($email)
+    {
+        $sql = "SELECT * FROM utilisateurs WHERE email = ? ";
+
+        $stmt = $this->pdo->prepare($sql);
+
+        $stmt->execute([$email]);
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+
     }
 }
 ?>
